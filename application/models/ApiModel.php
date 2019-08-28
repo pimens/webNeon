@@ -41,6 +41,11 @@ class ApiModel extends CI_model
         return $this->db->query("update movie set rating=$rating where movie_id=$id");
         // return $query->result_array();
     }
+    function insertRating($user, $video,$rating)
+    {
+        return $this->db->query("insert into rating values('',$video,$user,$rating)");
+        // return $query->result_array();
+    }
     function getRating($id)
     {
         return $this->db->query("select avg(rating) as rating from rating where video=$id");
@@ -62,6 +67,11 @@ class ApiModel extends CI_model
     function getVideoByTitle($title)
     {
         return $this->db->query("select * from video where judul like '%$title%'");
+        // return $query->result_array();
+    }
+    function getVideoByKategori($kategori)
+    {
+        return $this->db->query("select * from video where kategori='$kategori'");
         // return $query->result_array();
     }
 }

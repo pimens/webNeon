@@ -46,12 +46,18 @@ class Apii extends CI_Controller
 		$result = $this->ApiModel->getMovieByTitle($title)->result();
 		echo json_encode($result);
 	}
-
+	//rating
 	public function updateRating($rating, $id)
 	{
 
 		$this->load->model('ApiModel');
 		$this->ApiModel->updateRating($rating, $id);
+	}
+	public function insertRating($user,$video,$rating)
+	{
+
+		$this->load->model('ApiModel');
+		$this->ApiModel->insertRating($user,$video,$rating);
 	}
 	public function getRating($id)
 	{
@@ -84,6 +90,13 @@ class Apii extends CI_Controller
 
 		$this->load->model('ApiModel');
 		$result = $this->ApiModel->getVideoByTitle($title)->result();
+		echo json_encode($result);
+	}
+	public function getVideoByKategori($kategori)
+	{
+
+		$this->load->model('ApiModel');
+		$result = $this->ApiModel->getVideoByKategori($kategori)->result();
 		echo json_encode($result);
 	}
 }
