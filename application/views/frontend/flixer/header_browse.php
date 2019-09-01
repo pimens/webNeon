@@ -19,7 +19,7 @@
 	<div class="container" style=" width: 100%;">
 		<div class="navbar-header">
 			<a href="<?php echo base_url();?>index.php?browse/home" class="navbar-brand">
-				<img src="<?php echo base_url();?>/assets/global/neonton 5 shadow.png" style=" height: 40px;margin-right: 50px;" />
+				<img src="<?php echo base_url();?>/assets/global/logo.png" style=" height: 40px;margin-right: 50px;" />
 			</a>
 			<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
 				<span class="icon-bar"></span>
