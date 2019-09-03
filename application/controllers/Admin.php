@@ -202,6 +202,53 @@ class Admin extends CI_Controller {
 		redirect(base_url().'index.php?admin/material_list' , 'refresh');
 	}
 
+	// LIST OF QUESTION
+	function question_list()
+	{
+		$page_data['page_name']		=	'question_list';
+		$page_data['page_title']	=	'Manage Question';
+		$this->load->view('backend/index', $page_data);
+	}
+
+	// CREATE A NEW QUESTION
+	function question_create()
+	{
+		if (isset($_POST) && !empty($_POST))
+		{
+			$this->crud_model->create_question();
+			redirect(base_url().'index.php?admin/question_list' , 'refresh');
+		}
+		$page_data['page_name']		=	'question_create';
+		$page_data['page_title']	=	'Create Question';
+		$this->load->view('backend/index', $page_data);
+	}
+
+	// EDIT A QUESTION
+	function question_edit($id_soal = '')
+	{
+		if (isset($_POST) && !empty($_POST))
+		{
+			$data['bobot']		   =	$this->input->post('bobot');
+			$data['kunci_jawaban'] =	$this->input->post('kunci_jawaban');
+			$data['pertanyaan']    =	$this->input->post('pertanyaan');
+			$data['level']         =	$this->input->post('level');
+			$data['kategori']      =	$this->input->post('kategori');
+			$this->db->update('question', $data,  array('id_soal' => $id_soal));
+			redirect(base_url().'index.php?admin/question_list' , 'refresh');
+		}
+		$page_data['id_soal'] 	    =	$id_soal;
+		$page_data['page_name']		=	'question_edit';
+		$page_data['page_title']	=	'Edit Question';
+		$this->load->view('backend/index', $page_data);
+	}
+
+	// DELETE A QUESTION
+	function question_delete($id_soal = '')
+	{
+		$this->db->delete('question',  array('id_soal' => $id_soal));
+		redirect(base_url().'index.php?admin/question_list' , 'refresh');
+	}
+
 
 	// WATCH LIST OF MOVIES, MANAGE THEM
 	function movie_list()

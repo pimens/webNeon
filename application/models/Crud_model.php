@@ -237,6 +237,12 @@ class Crud_model extends CI_Model
 		return $query->result_array();
 	}
 
+	function get_question()
+	{
+		$query 		=	 $this->db->get('question');
+		return $query->result_array();
+	}
+
 	function create_bimbel()
 	{
 		$data['bidang']			 =	$this->input->post('bidang');
@@ -262,6 +268,17 @@ class Crud_model extends CI_Model
 		$id_materi = $this->db->insert_id();
 	}
 
+	function create_question()
+	{
+		$data['pertanyaan']	  =	$this->input->post('pertanyaan');
+		$data['kunci_jawaban']=	$this->input->post('kunci_jawaban');
+		$data['level']        =	$this->input->post('level');
+		$data['kategori']     =	$this->input->post('kategori');
+		$data['bobot']        =	$this->input->post('bobot');
+		$this->db->insert('question', $data);
+		$id_soal = $this->db->insert_id();
+	}
+	
 	function paginate($base_url, $total_rows, $per_page, $uri_segment)
 	{
 		$config = array(
