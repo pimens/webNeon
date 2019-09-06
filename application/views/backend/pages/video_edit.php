@@ -71,7 +71,7 @@
 				<input type="submit" class="btn btn-success col-12" value="Update Movie">
 			</div>
 			<div class="col-3">
-				<a href="<?php echo base_url();?>index.php?admin/movie_list" class="btn btn-secondary col-12">Go back</a>
+				<a href="<?php echo base_url();?>index.php?admin/video_list" class="btn btn-secondary col-12">Go back</a>
 			</div>
 		</div>
 	</div>
