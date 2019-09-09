@@ -112,6 +112,14 @@ class Browse extends CI_Controller {
 		$page_data['page_title']	=	'Home';
 		$this->load->view('frontend/index', $page_data);
 	}
+	
+	function ecourse()
+	{
+		$page_data['page_name']		=	'ecourse';
+		$page_data['page_title']	=	'E-course';
+
+		$this->load->view('frontend/index', $page_data);
+	}
 
 	function movie($genre_id = '', $offset = '')
 	{
@@ -128,6 +136,26 @@ class Browse extends CI_Controller {
         $this->pagination->initialize($config);
 
         $page_data['movies'] = $this->crud_model->get_movies($genre_id , $per_page, $this->uri->segment(4));
+		$page_data['total_result']	=	$total_result;
+
+		$this->load->view('frontend/index', $page_data);
+	}
+
+	function documentary($genre_id = '', $offset = '')
+	{
+		$page_data['page_name']		=	'documentary';
+		$page_data['page_title']	=	'Watch documentary';
+		$page_data['genre_id']	=	$genre_id;
+
+		// pagination configuration
+		$url = base_url() . 'index.php?browse/documentary/' . $genre_id;
+        $per_page = 20;
+		$this->db->where('genre_id' , $genre_id);
+        $total_result = $this->db->count_all_results('documentary');
+        $config = $this->crud_model->paginate($url, $total_result, $per_page, 4);
+        $this->pagination->initialize($config);
+
+        $page_data['documentary'] = $this->crud_model->get_documentary($genre_id , $per_page, $this->uri->segment(4));
 		$page_data['total_result']	=	$total_result;
 
 		$this->load->view('frontend/index', $page_data);
@@ -165,6 +193,14 @@ class Browse extends CI_Controller {
 		$page_data['page_name']		=	'playmovie';
 		$page_data['page_title']	=	'Watch Movie';
 		$page_data['movie_id']		=	$movie_id;
+		$this->load->view('frontend/index', $page_data);
+	}
+
+	function playdocumentary($documentary_id = '')
+	{
+		$page_data['page_name']		=	'playdocumentary';
+		$page_data['page_title']	=	'Watch Documentary';
+		$page_data['documentary_id']		=	$documentary_id;
 		$this->load->view('frontend/index', $page_data);
 	}
 

@@ -1,4 +1,4 @@
-''<?php include 'header_browse.php';?>
+<?php include 'header_browse.php';?>
 <?php
 	$series_details	=	$this->db->get_where('series' , array('series_id' => $series_id))->result_array();
 	foreach ($series_details as $row):

@@ -314,7 +314,6 @@ class Crud_model extends CI_Model
 
 	function get_movies($genre_id, $limit = NULL, $offset = 0)
 	{
-
 		$this->db->order_by('movie_id', 'desc');
 		$this->db->where('genre_id', $genre_id);
 		$query = $this->db->get('movie', $limit, $offset);
