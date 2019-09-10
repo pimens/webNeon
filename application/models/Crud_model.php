@@ -953,6 +953,7 @@ class Crud_model extends CI_Model
 		}
 	}
 
+
 	// public function get_actor_wise_movies_and_tv_series($actor_id = "", $item = "")
 	// {
 	// 	$item_list = array();
