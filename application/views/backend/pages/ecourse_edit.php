@@ -11,7 +11,18 @@
 							<div class="form-group mb-3">
 			                    <label for="name">E-Course Category</label>
 								<span class="help">e.g. "Matematika, Fisika"</span>
-			                    <input type="text" class="form-control" id = "kategori" name="kategori" value="<?php echo $ecourse_detail->kategori;?>">
+								<select name="kategori" class="form-control"  >
+									<option value="Kursus Toefl">Kursus Toefl</option>
+									<option value="Kursus Video Maker">Kursus Video Maker</option>
+                                    <option value="Bisnis Online">Bisnis Online</option>
+                                    <option value="Pemrograman Website">Pemrograman Website</option>
+                                    <option value="Desain Website">Desain Website</option>
+                                    <option value="Desain Grafis">Desain Grafis</option>
+                                    <option value="Pemrograman Anak">Pemrograman Anak</option>
+                                    <option value="Internet Marketing">Internet Marketing</option>
+                                    <option value="Kursus Komputer">Kursus Komputer</option>
+                                </select>
+			                    <!-- <input type="text" class="form-control" id = "kategori" name="kategori" value="<?php echo $ecourse_detail->kategori;?>"> -->
 			                </div>
 			                <div class="form-group mb-3">
 			                    <label for="name">Category Description</label>

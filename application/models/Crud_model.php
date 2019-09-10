@@ -49,10 +49,10 @@ class Crud_model extends CI_Model
 		}
 
 		$path_info 		=	pathinfo($video_url);
-		$extension		=	$path_info['extension'];
-		if ($extension == 'mp4') {
-			$iframe_embed = false;
-		}
+		// $extension		=	$path_info['extension'];
+		// if ($extension == 'mp4') {
+		// 	$iframe_embed = false;
+		// }
 		return $iframe_embed;
 	}
 
@@ -278,7 +278,7 @@ class Crud_model extends CI_Model
 		$this->db->insert('question', $data);
 		$id_soal = $this->db->insert_id();
 	}
-	
+
 	function paginate($base_url, $total_rows, $per_page, $uri_segment)
 	{
 		$config = array(
@@ -314,7 +314,6 @@ class Crud_model extends CI_Model
 
 	function get_movies($genre_id, $limit = NULL, $offset = 0)
 	{
-
 		$this->db->order_by('movie_id', 'desc');
 		$this->db->where('genre_id', $genre_id);
 		$query = $this->db->get('movie', $limit, $offset);
@@ -357,7 +356,7 @@ class Crud_model extends CI_Model
 		$data['genre_id']			=	$this->input->post('genre_id');
 		$data['featured']			=	$this->input->post('featured');
 		$data['url']				=	$this->input->post('url');
-		$data['trailer_url']  =	$this->input->post('trailer_url');
+		$data['trailer_url']        =	$this->input->post('trailer_url');
 
 		$actors						=	$this->input->post('actors');
 		$actor_entries				=	array();
@@ -371,6 +370,224 @@ class Crud_model extends CI_Model
 
 		move_uploaded_file($_FILES['thumb']['tmp_name'], 'assets/global/movie_thumb/' . $movie_id . '.jpg');
 		move_uploaded_file($_FILES['poster']['tmp_name'], 'assets/global/movie_poster/' . $movie_id . '.jpg');
+	}
+
+	function get_documentary($genre_id, $limit = NULL, $offset = 0)
+	{
+
+		$this->db->order_by('documentary_id', 'desc');
+		$this->db->where('genre_id', $genre_id);
+		$query = $this->db->get('documentary', $limit, $offset);
+		return $query->result_array();
+	}
+
+	function create_documentary()
+	{
+		if (empty($_FILES["file_video"]["name"]) || empty($_FILES["thumbnail"]["name"]) ) {
+			echo "gagal";
+		} else {
+			 // video upload
+			 $conf = array();
+			 $conf['upload_path']          = './assets/global/documentary_video';
+			 $conf['allowed_types']        = 'gif|jpg|png|mp4|jpeg|flv|wmv';
+			 $conf['max_size']             = '1000000';
+			 $conf['remove_space']         = TRUE;
+			 $conf['file_name']			   = $_FILES["file_video"]["name"];
+			 $this->load->library('upload', $conf, 'video'); // Create custom object for cover upload
+			//  $this->video->initialize($config);
+			 $this->video->do_upload('file_video');
+			 $file1      = $this->video->data();
+			 $file1      = $file1['file_name'];
+			//thum upload
+			 $con2 = array();
+			 $con2['upload_path']          = './assets/global/documentary_thumb';
+			 $con2['allowed_types']        = 'gif|jpg|png';
+			 $con2['max_size']             = '1000000';
+			 $con2['remove_space']         = TRUE;
+			 $con2['file_name']			   = $_FILES["thumbnail"]["name"];
+			 $this->load->library('upload', $con2, 'thumb'); // Create custom object for cover upload
+			//  $this->thumb->initialize($con1);
+			 $this->thumb->do_upload('thumbnail');
+			 $file2      = $this->thumb->data();
+			 $file2      = $file2['file_name'];
+			 
+			$data['title']				=	$this->input->post('title');
+			$data['description_short']	=	$this->input->post('description_short');
+			$data['description_long']	=	$this->input->post('description_long');
+			$data['year']			    =	$this->input->post('year');
+			$data['rating']				=	$this->input->post('rating');
+			$data['genre_id']			=	$this->input->post('genre_id');
+			$data['featured']			=	$this->input->post('featured');
+			$data['thumbnail']			=	$file2;
+			$data['file_video']			=	$file1;
+			
+			$actors						=	$this->input->post('actors');
+			$actor_entries				=	array();
+			$number_of_entries			=	sizeof($actors);
+			for ($i = 0; $i < $number_of_entries; $i++) {
+				array_push($actor_entries, $actors[$i]);
+			}
+			$data['actors']				=	json_encode($actor_entries);
+
+			$this->db->insert('documentary', $data);
+		}
+	}
+
+	function update_documentary($documentary_id = '')
+	{
+			// video upload
+			 $conf = array();
+			 $conf['upload_path']          = './assets/global/documentary_video';
+			 $conf['allowed_types']        = 'gif|jpg|png|mp4|jpeg|flv|wmv';
+			 $conf['max_size']             = '1000000';
+			 $conf['remove_space']         = TRUE;
+			 $conf['file_name']			   = $_FILES["file_video"]["name"];
+			 $this->load->library('upload', $conf, 'video'); // Create custom object for cover upload
+			//  $this->video->initialize($config);
+			 $this->video->do_upload('file_video');
+			 $file1      = $this->video->data();
+			 $file1      = $file1['file_name'];
+			//thum upload
+			 $con2 = array();
+			 $con2['upload_path']          = './assets/global/documentary_thumb';
+			 $con2['allowed_types']        = 'gif|jpg|png';
+			 $con2['max_size']             = '1000000';
+			 $con2['remove_space']         = TRUE;
+			 $con2['file_name']			   = $_FILES["thumbnail"]["name"];
+			 $this->load->library('upload', $con2, 'thumb'); // Create custom object for cover upload
+			//  $this->thumb->initialize($con1);
+			 $this->thumb->do_upload('thumbnail');
+			 $file2      = $this->thumb->data();
+			 $file2      = $file2['file_name'];
+
+			$data['title']				=	$this->input->post('title');
+			$data['description_short']	=	$this->input->post('description_short');
+			$data['description_long']	=	$this->input->post('description_long');
+			$data['year']				=	$this->input->post('year');
+			$data['rating']				=	$this->input->post('rating');
+			$data['genre_id']			=	$this->input->post('genre_id');
+			$data['featured']			=	$this->input->post('featured');
+			$data['thumbnail']			=	$file2;
+			$data['file_video']			=	$file1;
+
+			$actors						=	$this->input->post('actors');
+			$actor_entries				=	array();
+			$number_of_entries			=	sizeof($actors);
+			for ($i = 0; $i < $number_of_entries; $i++) {
+				array_push($actor_entries, $actors[$i]);
+			}
+			$data['actors']				=	json_encode($actor_entries);
+
+			$this->db->update('documentary', $data, array('documentary_id' => $documentary_id));
+	}
+
+	function get_reality($genre_id, $limit = NULL, $offset = 0)
+	{
+
+		$this->db->order_by('reality_id', 'desc');
+		$this->db->where('genre_id', $genre_id);
+		$query = $this->db->get('reality_show', $limit, $offset);
+		return $query->result_array();
+	}
+
+	function create_reality()
+	{
+		if (empty($_FILES["file_video"]["name"]) || empty($_FILES["thumbnail"]["name"]) ) {
+			echo "gagal";
+		} else {
+			 // video upload
+			 $conf = array();
+			 $conf['upload_path']          = './assets/global/reality_video';
+			 $conf['allowed_types']        = 'gif|jpg|png|mp4|jpeg|flv|wmv';
+			 $conf['max_size']             = '1000000';
+			 $conf['remove_space']         = TRUE;
+			 $conf['file_name']			   = $_FILES["file_video"]["name"];
+			 $this->load->library('upload', $conf, 'video'); // Create custom object for cover upload
+			//  $this->video->initialize($config);
+			 $this->video->do_upload('file_video');
+			 $file1      = $this->video->data();
+			 $file1      = $file1['file_name'];
+			//thum upload
+			 $con2 = array();
+			 $con2['upload_path']          = './assets/global/reality_thumb';
+			 $con2['allowed_types']        = 'gif|jpg|png';
+			 $con2['max_size']             = '1000000';
+			 $con2['remove_space']         = TRUE;
+			 $con2['file_name']			   = $_FILES["thumbnail"]["name"];
+			 $this->load->library('upload', $con2, 'thumb'); // Create custom object for cover upload
+			//  $this->thumb->initialize($con1);
+			 $this->thumb->do_upload('thumbnail');
+			 $file2      = $this->thumb->data();
+			 $file2      = $file2['file_name'];
+			 
+			$data['title']				=	$this->input->post('title');
+			$data['description_short']	=	$this->input->post('description_short');
+			$data['description_long']	=	$this->input->post('description_long');
+			$data['year']			    =	$this->input->post('year');
+			$data['rating']				=	$this->input->post('rating');
+			$data['genre_id']			=	$this->input->post('genre_id');
+			$data['featured']			=	$this->input->post('featured');
+			$data['thumbnail']			=	$file2;
+			$data['file_video']			=	$file1;
+			
+			$actors						=	$this->input->post('actors');
+			$actor_entries				=	array();
+			$number_of_entries			=	sizeof($actors);
+			for ($i = 0; $i < $number_of_entries; $i++) {
+				array_push($actor_entries, $actors[$i]);
+			}
+			$data['actors']				=	json_encode($actor_entries);
+
+			$this->db->insert('reality_show', $data);
+		}
+	}
+
+	function update_reality($reality_id = '')
+	{
+		// video upload
+			 $conf = array();
+			 $conf['upload_path']          = './assets/global/reality_video';
+			 $conf['allowed_types']        = 'gif|jpg|png|mp4|jpeg|flv|wmv';
+			 $conf['max_size']             = '1000000';
+			 $conf['remove_space']         = TRUE;
+			 $conf['file_name']			   = $_FILES["file_video"]["name"];
+			 $this->load->library('upload', $conf, 'video'); // Create custom object for cover upload
+			//  $this->video->initialize($config);
+			 $this->video->do_upload('file_video');
+			 $file1      = $this->video->data();
+			 $file1      = $file1['file_name'];
+			//thum upload
+			 $con2 = array();
+			 $con2['upload_path']          = './assets/global/reality_thumb';
+			 $con2['allowed_types']        = 'gif|jpg|png';
+			 $con2['max_size']             = '1000000';
+			 $con2['remove_space']         = TRUE;
+			 $con2['file_name']			   = $_FILES["thumbnail"]["name"];
+			 $this->load->library('upload', $con2, 'thumb'); // Create custom object for cover upload
+			//  $this->thumb->initialize($con1);
+			 $this->thumb->do_upload('thumbnail');
+			 $file2      = $this->thumb->data();
+			 $file2      = $file2['file_name'];
+
+			$data['title']				=	$this->input->post('title');
+			$data['description_short']	=	$this->input->post('description_short');
+			$data['description_long']	=	$this->input->post('description_long');
+			$data['year']				=	$this->input->post('year');
+			$data['rating']				=	$this->input->post('rating');
+			$data['genre_id']			=	$this->input->post('genre_id');
+			$data['featured']			=	$this->input->post('featured');
+			$data['thumbnail']			=	$file2;
+			$data['file_video']			=	$file1;
+
+			$actors						=	$this->input->post('actors');
+			$actor_entries				=	array();
+			$number_of_entries			=	sizeof($actors);
+			for ($i = 0; $i < $number_of_entries; $i++) {
+				array_push($actor_entries, $actors[$i]);
+			}
+			$data['actors']				=	json_encode($actor_entries);
+
+			$this->db->update('reality_show', $data, array('reality_id' => $reality_id));
 	}
 
 	function create_series()
@@ -461,7 +678,7 @@ class Crud_model extends CI_Model
 			 $config = array();
 			 $config['upload_path']          = './assets/global/video';
 			 $config['allowed_types']        = 'gif|jpg|png|mp4|jpeg|flv|wmv';
-			 $config['max_size']             = '1000M';
+			 $config['max_size']             = '1000000';
 			 $config['remove_space']         = TRUE;
 			 $config['file_name']			= $_FILES["file_video"]["name"];
 			 $this->load->library('upload', $config, 'video'); // Create custom object for cover upload
@@ -490,44 +707,46 @@ class Crud_model extends CI_Model
 				'thumbnail'       => $file2,
 				'file_video'      => $file1
 			);
-			// $id_video = $this->db->insert_id();
 			$this->db->insert('video', $data);
-			// $id_video = $this->db->insert_id();
-			// move_uploaded_file($_FILES['file_video']['tmp_name'], 'assets/global/video/' . $id_video . 'blueee.mp4');
-			// move_uploaded_file($_FILES['thumbnail']['tmp_name'], 'assets/global/video_thumb/' . $id_video . '.jpg');
 		}
 	}
 
 	function update_video($id_video = '')
 	{
-		$config['upload_path']          = './assets/global/video';
-		$config['allowed_types']        = 'gif|jpg|png|mp4|jpeg|flv|wmv';
-		$config['max_size']             = '1000M';
-		$config['remove_space']         = TRUE;
 
-		$this->load->library('upload', $config);
+		// video upload
+			 $conf = array();
+			 $conf['upload_path']          = './assets/global/video';
+			 $conf['allowed_types']        = 'gif|jpg|png|mp4|jpeg|flv|wmv';
+			 $conf['max_size']             = '1000000';
+			 $conf['remove_space']         = TRUE;
+			 $conf['file_name']			   = $_FILES["file_video"]["name"];
+			 $this->load->library('upload', $conf, 'video'); // Create custom object for cover upload
+			//  $this->video->initialize($config);
+			 $this->video->do_upload('file_video');
+			 $file1      = $this->video->data();
+			 $file1      = $file1['file_name'];
+			//thum upload
+			 $con2 = array();
+			 $con2['upload_path']          = './assets/global/video_thumb';
+			 $con2['allowed_types']        = 'gif|jpg|png';
+			 $con2['max_size']             = '1000000';
+			 $con2['remove_space']         = TRUE;
+			 $con2['file_name']			   = $_FILES["thumbnail"]["name"];
+			 $this->load->library('upload', $con2, 'thumb'); // Create custom object for cover upload
+			//  $this->thumb->initialize($con1);
+			 $this->thumb->do_upload('thumbnail');
+			 $file2      = $this->thumb->data();
+			 $file2      = $file2['file_name'];
 
-		if ((!$this->upload->do_upload('thumbnail')) && (!$this->upload->do_upload('file_video'))) {
-			echo "gagal";
-		} else {
-			$fileSM1    = $this->upload->do_upload('thumbnail');
-			$file1      = $this->upload->data();
-			$fileSM2    = $this->upload->do_upload('file_video');
-			$file2      = $this->upload->data();
-			$file1      = $file1['file_name'];
-			$file2      = $file2['file_name'];
-			$data       = array(
-				'judul'           => $this->input->post('judul', true),
-				'level'           => $this->input->post('level', true),
-				'kategori'        => $this->input->post('kategori', true),
-				'deskripsi_video' => $this->input->post('deskripsi_video', true),
-				'thumbnail'       => $file1,
-				'file_video'      => $file2
-			);
+			$data['judul']				=	$this->input->post('judul');
+			$data['level']	            =	$this->input->post('level');
+			$data['kategori']	        =	$this->input->post('kategori');
+			$data['deskripsi_video']	=	$this->input->post('deskripsi_video');
+			$data['thumbnail']			=	$file2;
+			$data['file_video']			=	$file1;
+
 			$this->db->update('video', $data, array('id_video' => $id_video));
-			// $id_video = $this->db->insert_id();
-			move_uploaded_file($_FILES['file_video']['tmp_name'], 'assets/global/video/' . $id_video . '.mp4');
-		}
 	}
 
 	function create_actor()
@@ -734,22 +953,22 @@ class Crud_model extends CI_Model
 		}
 	}
 
-	public function get_actor_wise_movies_and_tv_series($actor_id = "", $item = "")
-	{
-		$item_list = array();
-		$item_details = $this->db->get($item)->result_array();
-		$cheker = array();
-		foreach ($item_details as $row) {
-			$actor_array = json_decode($row['actors'], true);
-			if (in_array($actor_id, $actor_array)) {
-				array_push($cheker, $row[$item . '_id']);
-			}
-		}
+	// public function get_actor_wise_movies_and_tv_series($actor_id = "", $item = "")
+	// {
+	// 	$item_list = array();
+	// 	$item_details = $this->db->get($item)->result_array();
+	// 	$cheker = array();
+	// 	foreach ($item_details as $row) {
+	// 		$actor_array = json_decode($row['actors'], true);
+	// 		if (in_array($actor_id, $actor_array)) {
+	// 			array_push($cheker, $row[$item . '_id']);
+	// 		}
+	// 	}
 
-		if (count($cheker) > 0) {
-			$this->db->where_in($item . '_id', $cheker);
-			$item_list = $this->db->get($item)->result_array();
-		}
-		return $item_list;
-	}
+	// 	if (count($cheker) > 0) {
+	// 		$this->db->where_in($item . '_id', $cheker);
+	// 		$item_list = $this->db->get($item)->result_array();
+	// 	}
+	// 	return $item_list;
+	// }
 }

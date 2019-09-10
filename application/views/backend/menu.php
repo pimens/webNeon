@@ -24,69 +24,105 @@
                            </a>
                        </li>
 
-                       <li class="side-nav-item <?php if ($page_name == 'movie_list' || $page_name == 'movie_edit' || $page_name == 'movie_create')echo 'active';?>">
-                           <a href="<?php echo base_url();?>index.php?admin/movie_list" class="side-nav-link  <?php if ($page_name == 'movie_list' || $page_name == 'movie_edit' || $page_name == 'movie_create')echo 'active';?>">
-                               <!-- <i class="mdi mdi-movie"></i> -->
-                               <span> <?php echo get_phrase('movies'); ?> </span>
+                        <li
+                       <?php
+                       $is_active = '';
+                       if ( $page_name == 'genre_list'    ||
+                        $page_name == 'genre_edit'    ||
+                        $page_name == 'genre_create'    ||
+                        $page_name == 'actor_list'    ||
+                        $page_name == 'actor_edit'    ||
+                        $page_name == 'actor_create'    ||
+                        $page_name == 'movie_list'    ||
+                        $page_name == 'movie_edit'    ||
+                        $page_name == 'movie_create'    ||
+                        $page_name == 'series_list'    ||
+                        $page_name == 'series_edit'    ||
+                        $page_name == 'series_create'  ||
+                        $page_name == 'reality_list'    ||
+                        $page_name == 'reality_edit'    ||
+                        $page_name == 'reality_create'  ||
+                        $page_name == 'documentary_list'    ||
+                        $page_name == 'documentary_edit'    ||
+                        $page_name == 'documentary_create'    ) $is_active = 'active'; ?>
+                        class="side-nav-item <?php echo $is_active; ?>">
+                           <a href="javascript: void(0);" class="side-nav-link <?php echo $is_active; ?>">
+                               <!-- <i class="dripicons-view-apps"></i> -->
+                               <span> <?php echo get_phrase('Entertainment'); ?> </span>
+                               <span class="menu-arrow"></span>
                            </a>
+                           <ul class="side-nav-second-level" aria-expanded="false">
+                               <li class = "<?php if($page_name == 'genre_list') echo 'active'; ?>">
+                                   <a href="<?php echo base_url();?>index.php?admin/genre_list" class = ""><?php echo get_phrase('genre'); ?></a>
+                               </li>
+
+                               <li class = "<?php if($page_name == 'actor_list') echo 'active'; ?>">
+                                   <a href="<?php echo base_url();?>index.php?admin/actor_list" class = ""><?php echo get_phrase('actor'); ?></a>
+                               </li>
+
+                               <li class = "<?php if($page_name == 'movie_list') echo 'active'; ?>">
+                                   <a href="<?php echo base_url();?>index.php?admin/movie_list" class = ""><?php echo get_phrase('movie'); ?></a>
+                               </li>
+
+                               <li class = "<?php if($page_name == 'series_list') echo 'active'; ?>">
+                                   <a href="<?php echo base_url();?>index.php?admin/series_list" class = ""><?php echo get_phrase('TV series'); ?></a>
+                               </li>
+
+                               <li class = "<?php if($page_name == 'documentary_list') echo 'active'; ?>">
+                                   <a href="<?php echo base_url();?>index.php?admin/documentary_list" class = ""><?php echo get_phrase('documentary'); ?></a>
+                               </li>
+
+                               <li class = "<?php if($page_name == 'reality_list') echo 'active'; ?>">
+                                   <a href="<?php echo base_url();?>index.php?admin/reality_list" class = ""><?php echo get_phrase('reality show'); ?></a>
+                               </li>
+                           </ul>
                        </li>
 
-                       <li class="side-nav-item <?php if ($page_name == 'series_list' || $page_name == 'series_create' || $page_name == 'series_edit' || $page_name == 'season_edit')echo 'active';?>">
-                           <a href="<?php echo base_url();?>index.php?admin/series_list" class="side-nav-link <?php if ($page_name == 'series_list' || $page_name == 'series_create' || $page_name == 'series_edit' || $page_name == 'season_edit')echo 'active';?>">
-                               <!-- <i class="mdi mdi-movie-roll"></i> -->
-                               <span> <?php echo get_phrase('TV_series'); ?> </span>
+                       <li
+                       <?php
+                       $is_active = '';
+                       if ( $page_name == 'material_list'    ||
+                        $page_name == 'material_edit'    ||
+                        $page_name == 'material_create'    ||
+                        $page_name == 'question_list'    ||
+                        $page_name == 'question_edit'    ||
+                        $page_name == 'question_create'    ||
+                        $page_name == 'video_list'    ||
+                        $page_name == 'video_edit'    ||
+                        $page_name == 'video_create'    ||
+                        $page_name == 'bimbel_list'    ||
+                        $page_name == 'bimbel_edit'    ||
+                        $page_name == 'bimbel_create'  ||
+                        $page_name == 'ecourse_list'    ||
+                        $page_name == 'ecourse_edit'    ||
+                        $page_name == 'ecourse_create'     ) $is_active = 'active'; ?>
+                        class="side-nav-item <?php echo $is_active; ?>">
+                           <a href="javascript: void(0);" class="side-nav-link <?php echo $is_active; ?>">
+                               <!-- <i class="dripicons-view-apps"></i> -->
+                               <span> <?php echo get_phrase('Education'); ?> </span>
+                               <span class="menu-arrow"></span>
                            </a>
-                       </li>
+                           <ul class="side-nav-second-level" aria-expanded="false">
+                               <li class = "<?php if($page_name == 'material_list') echo 'active'; ?>">
+                                   <a href="<?php echo base_url();?>index.php?admin/material_list" class = ""><?php echo get_phrase('material study'); ?></a>
+                               </li>
 
-                       <li class="side-nav-item <?php if ($page_name == 'genre_list' || $page_name == 'genre_edit' || $page_name == 'genre_create')echo 'active';?>">
-                           <a href="<?php echo base_url();?>index.php?admin/genre_list" class="side-nav-link <?php if ($page_name == 'genre_list' || $page_name == 'genre_edit' || $page_name == 'genre_create')echo 'active';?>">
-                               <!-- <i class="dripicons-align-justify"></i> -->
-                               <span> <?php echo get_phrase('genre'); ?> </span>
-                           </a>
-                       </li>
+                               <li class = "<?php if($page_name == 'question_list') echo 'active'; ?>">
+                                   <a href="<?php echo base_url();?>index.php?admin/question_list" class = ""><?php echo get_phrase('question'); ?></a>
+                               </li>
 
-                       <li class="side-nav-item <?php if ($page_name == 'bimbel_list' || $page_name == 'bimbel_edit' || $page_name == 'bimbel_create')echo 'active';?>">
-                           <a href="<?php echo base_url();?>index.php?admin/bimbel_list" class="side-nav-link <?php if ($page_name == 'bimbel_list' || $page_name == 'bimbel_edit' || $page_name == 'bimbel_create')echo 'active';?>">
-                               <!-- <i class=""></i> -->
-                               <span> <?php echo get_phrase('bimbel'); ?> </span>
-                           </a>
-                       </li>
+                               <li class = "<?php if($page_name == 'video_list') echo 'active'; ?>">
+                                   <a href="<?php echo base_url();?>index.php?admin/video_list" class = ""><?php echo get_phrase('video'); ?></a>
+                               </li>
 
-                       <li class="side-nav-item <?php if ($page_name == 'ecourse_list' || $page_name == 'ecourse_edit' || $page_name == 'ecourse_create')echo 'active';?>">
-                           <a href="<?php echo base_url();?>index.php?admin/ecourse_list" class="side-nav-link <?php if ($page_name == 'ecourse_list' || $page_name == 'ecourse_edit' || $page_name == 'ecourse_create')echo 'active';?>">
-                               <!-- <i class=""></i> -->
-                               <span> <?php echo get_phrase('e-course'); ?> </span>
-                           </a>
-                       </li>
+                               <li class = "<?php if($page_name == 'bimbel_list') echo 'active'; ?>">
+                                   <a href="<?php echo base_url();?>index.php?admin/bimbel_list" class = ""><?php echo get_phrase('bimbel'); ?></a>
+                               </li>
 
-                       <li class="side-nav-item <?php if ($page_name == 'material_list' || $page_name == 'material_edit' || $page_name == 'material_create')echo 'active';?>">
-                           <a href="<?php echo base_url();?>index.php?admin/material_list" class="side-nav-link <?php if ($page_name == 'material_list' || $page_name == 'material_edit' || $page_name == 'material_create')echo 'active';?>">
-                               <!-- <i class=""></i> -->
-                               <span> <?php echo get_phrase('study material'); ?> </span>
-                           </a>
-                       </li>
-
-                       <li class="side-nav-item <?php if ($page_name == 'question_list' || $page_name == 'question_edit' || $page_name == 'question_create')echo 'active';?>">
-                           <a href="<?php echo base_url();?>index.php?admin/question_list" class="side-nav-link <?php if ($page_name == 'question_list' || $page_name == 'question_edit' || $page_name == 'question_create')echo 'active';?>">
-                               <!-- <i class=""></i> -->
-                               <span> <?php echo get_phrase('question'); ?> </span>
-                           </a>
-                       </li>
-                       
-                       <li class="side-nav-item <?php if ($page_name == 'video_list' || $page_name == 'video_edit' || $page_name == 'video_create')echo 'active';?>">
-                           <a href="<?php echo base_url();?>index.php?admin/video_list" class="side-nav-link <?php if ($page_name == 'video_list' || $page_name == 'video_edit' || $page_name == 'video_create')echo 'active';?>">
-                               <!-- <i class="glyphicon glyphicon-facetime-video"></i> -->
-                               <span> <?php echo get_phrase('video'); ?> </span>
-                           </a>
-                       </li>
-
-                       
-
-                       <li class="side-nav-item <?php if ($page_name == 'actor_list' || $page_name == 'actor_edit' || $page_name == 'actor_create')echo 'active';?>">
-                           <a href="<?php echo base_url();?>index.php?admin/actor_list" class="side-nav-link <?php if ($page_name == 'actor_list' || $page_name == 'actor_edit' || $page_name == 'actor_create')echo 'active';?>">
-                               <!-- <i class="mdi mdi-account-settings"></i> -->
-                               <span> <?php echo get_phrase('actors'); ?> </span>
-                           </a>
+                               <li class = "<?php if($page_name == 'ecourse_list') echo 'active'; ?>">
+                                   <a href="<?php echo base_url();?>index.php?admin/ecourse_list" class = ""><?php echo get_phrase('ecourse'); ?></a>
+                               </li>
+                           </ul>
                        </li>
 
                        <li class="side-nav-item <?php if ($page_name == 'user_list' || $page_name == 'user_edit' || $page_name == 'user_create')echo 'active';?>">

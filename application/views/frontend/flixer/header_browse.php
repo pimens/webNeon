@@ -35,15 +35,15 @@
 						<?php echo get_phrase('Entertainment');?> <span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu" aria-labelledby="themes">
-						<li><a href="">
+						<li><a href="<?php echo base_url();?>index.php?browse/movie">
 							Movies
 							</a>
 						</li>
-						<li><a href="">
+						<li><a href="<?php echo base_url();?>index.php?browse/series">
 							TV Series
 							</a>
 						</li>
-						<li><a href="">
+						<li><a href="<?php echo base_url();?>index.php?browse/documentary">
 							Documentary
 							</a>
 						</li>
@@ -63,7 +63,7 @@
 							Bimbel
 							</a>
 						</li>
-						<li><a href="">
+						<li><a href="<?php echo base_url();?>index.php?browse/ecourse">
 							E-Course
 							</a>
 						</li>

@@ -292,6 +292,91 @@ class Admin extends CI_Controller {
 		redirect(base_url().'index.php?admin/movie_list' , 'refresh');
 	}
 
+	// WATCH LIST OF DOCUMENTARY, MANAGE THEM
+	function documentary_list()
+	{
+		$page_data['page_name']		=	'documentary_list';
+		$page_data['page_title']	=	'Manage documentary';
+		$this->load->view('backend/index', $page_data);
+	}
+
+	// CREATE A NEW DOCUMENTARY
+	function documentary_create()
+	{
+		if (isset($_POST) && !empty($_POST))
+		{
+			$this->crud_model->create_documentary();
+			redirect(base_url().'index.php?admin/documentary_list' , 'refresh');
+		}
+		$page_data['page_name']		=	'documentary_create';
+		$page_data['page_title']	=	'Create documentary';
+		$this->load->view('backend/index', $page_data);
+	}
+
+	// EDIT A DOCUMENTARY
+	function documentary_edit($documentary_id = '')
+	{
+		if (isset($_POST) && !empty($_POST))
+		{
+			$this->crud_model->update_documentary($documentary_id);
+			redirect(base_url().'index.php?admin/documentary_list' , 'refresh');
+		}
+		$page_data['documentary_id']		=	$documentary_id;
+		$page_data['page_name']		=	'documentary_edit';
+		$page_data['page_title']	=	'Edit documentary';
+		$this->load->view('backend/index', $page_data);
+	}
+
+	// DELETE A DOCUMENTARY
+	function documentary_delete($documentary_id = '')
+	{
+		$this->db->delete('documentary',  array('documentary_id' => $documentary_id));
+		redirect(base_url().'index.php?admin/documentary_list' , 'refresh');
+	}
+
+	// WATCH LIST OF REALITY, MANAGE THEM
+	function reality_list()
+	{
+		$page_data['page_name']		=	'reality_list';
+		$page_data['page_title']	=	'Manage reality';
+		$this->load->view('backend/index', $page_data);
+	}
+
+	// CREATE A NEW REALITY
+	function reality_create()
+	{
+		if (isset($_POST) && !empty($_POST))
+		{
+			$this->crud_model->create_reality();
+			redirect(base_url().'index.php?admin/reality_list' , 'refresh');
+		}
+		$page_data['page_name']		=	'reality_create';
+		$page_data['page_title']	=	'Create reality';
+		$this->load->view('backend/index', $page_data);
+	}
+
+	// EDIT A REALITY
+	function reality_edit($reality_id = '')
+	{
+		if (isset($_POST) && !empty($_POST))
+		{
+			$this->crud_model->update_reality($reality_id);
+			redirect(base_url().'index.php?admin/reality_list' , 'refresh');
+		}
+		$page_data['reality_id']		=	$reality_id;
+		$page_data['page_name']		=	'reality_edit';
+		$page_data['page_title']	=	'Edit reality';
+		$this->load->view('backend/index', $page_data);
+	}
+
+	// DELETE A REALITY
+	function reality_delete($reality_id = '')
+	{
+		$this->db->delete('reality_show',  array('reality_id' => $reality_id));
+		redirect(base_url().'index.php?admin/reality_list' , 'refresh');
+	}
+
+
 	// WATCH LIST OF SERIESS, MANAGE THEM
 	function series_list()
 	{
@@ -421,6 +506,7 @@ class Admin extends CI_Controller {
 	// CREATE A NEW VIDEO
 	function video_create()
 	{
+		
 		if (isset($_POST) && !empty($_POST))
 		{
 			$this->crud_model->create_video();
