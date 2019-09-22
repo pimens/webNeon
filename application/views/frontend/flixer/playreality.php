@@ -1,13 +1,13 @@
 <?php include 'header_browse.php'; ?>
 <?php
-$documentary_details	=	$this->db->get_where('documentary', array('documentary_id' => $documentary_id))->result_array();
-foreach ($documentary_details as $row) :
+$reality_details	=	$this->db->get_where('reality_show', array('reality_id' => $reality_id))->result_array();
+foreach ($reality_details as $row) :
 	?>
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url() . 'assets/frontend/' . $selected_theme; ?>/hovercss/demo.css" />
 	<link rel="stylesheet" href="https://cdn.plyr.io/3.5.6/plyr.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url() . 'assets/frontend/' . $selected_theme; ?>/hovercss/set1.css" />
 	<style>
-		.documentary_thumb {}
+		.reality_thumb {}
 
 		video {
 			width: 100% !important;
@@ -41,7 +41,7 @@ foreach ($documentary_details as $row) :
 			position: absolute;
 			top: 0;
 			left: 0;
-			background-image: url(<?php echo $this->crud_model->get_poster_url('documentary', $row['documentary_id']); ?>);
+			background-image: url(<?php echo $this->crud_model->get_poster_url('reality_show', $row['reality_id']); ?>);
 			width: 100%;
 			height: 100%;
 			opacity: 0.2;
@@ -80,7 +80,7 @@ foreach ($documentary_details as $row) :
 				<div class="col-md-12">
 
 					<video poster="/path/to/poster.jpg" id="player" playsinline controls>
-						<source src="<?php echo base_url() . "assets/global/documentary_video/" . $row['file_video']; ?>" type="video/mp4" />
+						<source src="<?php echo base_url() . "assets/global/reality_video/" . $row['file_video']; ?>" type="video/mp4" />
 						<source src="/path/to/video.webm" type="video/webm" />
 
 						<!-- Captions are optional -->
@@ -98,7 +98,7 @@ foreach ($documentary_details as $row) :
 			<div class="col-lg-8">
 				<div class="row">
 					<div class="col-lg-3">
-						<img src="<?php echo $this->crud_model->get_thumb_url('documentary', $row['documentary_id']); ?>" style="height: 60px; margin:20px;" />
+						<img src="<?php echo $this->crud_model->get_thumb_url('reality_show', $row['reality_id']); ?>" style="height: 60px; margin:20px;" />
 					</div>
 					<div class="col-lg-9">
 						<!-- VIDEO TITLE -->
@@ -126,7 +126,7 @@ foreach ($documentary_details as $row) :
 				<span id="mylist_button_holder">
 				</span>
 				<span id="mylist_add_button" style="display:none;">
-					<a href="#" class="btn btn-danger btn-md" style="font-size: 16px; margin-top: 20px;" onclick="process_list('documentary' , 'add', <?php echo $row['documentary_id']; ?>)">
+					<a href="#" class="btn btn-danger btn-md" style="font-size: 16px; margin-top: 20px;" onclick="process_list('reality' , 'add', <?php echo $row['reality_id']; ?>)">
 						<i class="fa fa-plus"></i> <?php echo get_phrase('Add_to_My_list'); ?>
 					</a>
 				</span>
@@ -134,18 +134,18 @@ foreach ($documentary_details as $row) :
 					<i class="fa fa-eye"></i> <?php echo get_phrase('watch_trailer'); ?>
 				</button>
 				<span id="mylist_delete_button" style="display:none;">
-					<a href="#" class="btn btn-default btn-md" style="font-size: 16px; margin-top: 20px;" onclick="process_list('documentary' , 'delete', <?php echo $row['documentary_id']; ?>)">
+					<a href="#" class="btn btn-default btn-md" style="font-size: 16px; margin-top: 20px;" onclick="process_list('reality_show' , 'delete', <?php echo $row['reality_id']; ?>)">
 						<i class="fa fa-check"></i> <?php echo get_phrase('Added_to_My_list'); ?>
 					</a>
 				</span>
-				<!-- DOCUMENTARY GENRE -->
+				<!-- REALITY GENRE -->
 				<div style="margin-top: 10px;">
 					<strong><?php echo get_phrase('Genre'); ?></strong> :
-					<a href="<?php echo base_url(); ?>index.php?browse/documentary/<?php echo $row['genre_id']; ?>">
+					<a href="<?php echo base_url(); ?>index.php?browse/reality/<?php echo $row['genre_id']; ?>">
 						<?php echo $this->db->get_where('genre', array('genre_id' => $row['genre_id']))->row()->name; ?>
 					</a>
 				</div>
-				<!-- DOCUMENTARY YEAR -->
+				<!-- REALITY YEAR -->
 				<div>
 					<strong><?php echo get_phrase('Year'); ?></strong> : <?php echo $row['year']; ?>
 				</div>
@@ -195,17 +195,17 @@ foreach ($documentary_details as $row) :
 									?>
 							</p>
 						</div>
-						<!-- TAB FOR SAME CATEGORY DOCUMENTARY -->
+						<!-- TAB FOR SAME CATEGORY REALITY -->
 						<div class="tab-pane  " id="more">
 							<p>
 								<div class="content">
 									<div class="grid">
 										<?php
-											$documentarys = $this->crud_model->get_documentary($row['genre_id'], 10, 0);
-											foreach ($documentarys as $row) {
+											$realitys = $this->crud_model->get_reality($row['genre_id'], 10, 0);
+											foreach ($realitys as $row) {
 												$title	=	$row['title'];
-												$link	=	base_url() . 'index.php?browse/playdocumentary/' . $row['documentary_id'];
-												$thumb	=	$this->crud_model->get_thumb_url('documentary', $row['documentary_id']);
+												$link	=	base_url() . 'index.php?browse/playreality/' . $row['reality_id'];
+												$thumb	=	$this->crud_model->get_thumb_url('reality_show', $row['reality_id']);
 												include 'thumb.php';
 											}
 											?>
@@ -227,7 +227,7 @@ foreach ($documentary_details as $row) :
 		if ($('#trailer_div').hasClass('hidden')) {
 			$('#trailer_div').removeClass('hidden');
 			$('#movie_div').addClass('hidden');
-			$('#watch_button').html('<?php echo '<i class="fa fa-eye"></i> ' . get_phrase('watch_documentary') ?>');
+			$('#watch_button').html('<?php echo '<i class="fa fa-eye"></i> ' . get_phrase('watch_reality') ?>');
 			player.pause();
 		} else {
 			$('#movie_div').removeClass('hidden');
@@ -260,8 +260,8 @@ foreach ($documentary_details as $row) :
 	// Show the add/delete wishlist button on page load
 	$(document).ready(function() {
 
-		// Checking if this documentary_id exist in the active user's wishlist
-		mylist_exist_status = "<?php echo $this->crud_model->get_mylist_exist_status('documentary', $row['documentary_id']); ?>";
+		// Checking if this reality_id exist in the active user's wishlist
+		mylist_exist_status = "<?php echo $this->crud_model->get_mylist_exist_status('reality_show', $row['reality_id']); ?>";
 
 		if (mylist_exist_status == 'true') {
 			$("#mylist_button_holder").html($("#mylist_delete_button").html());

@@ -14,14 +14,14 @@ class Apii extends CI_Controller
 	{
 
 		$this->load->model('ApiModel');
-		$result = $this->ApiModel->getUser()->result();
-		echo json_encode($result);
+		$data['r'] = $this->ApiModel->getVideo()->result();
+		$this->load->view("halaman", $data);
+		// $this->load->view("backend/pages/material_create", $data);
 	}
-	public function getUser($email,$pass)
+	public function getUser($email, $pass)
 	{
-
 		$this->load->model('ApiModel');
-		$result = $this->ApiModel->getUser($email,$pass)->result();
+		$result = $this->ApiModel->getUser($email, $pass)->result();
 		echo json_encode($result);
 	}
 	public function getMovie()
@@ -53,11 +53,16 @@ class Apii extends CI_Controller
 		$this->load->model('ApiModel');
 		$this->ApiModel->updateRating($rating, $id);
 	}
-	public function insertRating($user,$video,$rating)
+	public function cekRating($idUser, $idVideo)
 	{
-
 		$this->load->model('ApiModel');
-		$this->ApiModel->insertRating($user,$video,$rating);
+		$r = $this->ApiModel->cekRating($idUser, $idVideo)->result();
+		echo json_encode($r);
+	}
+	public function insertRating($user, $video, $rating)
+	{
+		$this->load->model('ApiModel');
+		$this->ApiModel->insertRating($user, $video, $rating);
 	}
 	public function getRating($id)
 	{
@@ -98,5 +103,68 @@ class Apii extends CI_Controller
 		$this->load->model('ApiModel');
 		$result = $this->ApiModel->getVideoByKategori($kategori)->result();
 		echo json_encode($result);
+	}
+
+
+
+
+	public function getR($id)
+	{
+
+		$this->load->model('ApiModel');
+		$d = $this->ApiModel->getRating($id)->row();
+		echo $d->rating;
+	}
+	public function insertR()
+	{
+		$judul = $this->input->post("judul");
+		echo $judul;
+	}
+	public function getVid()
+	{
+
+		$this->load->model('ApiModel');
+		$result = $this->ApiModel->getVideo()->result();
+		echo "
+		<table>
+			<tr>
+				<td>judul</td>
+				<td>file</td>
+			</tr>
+		";
+		foreach ($result as $r) {
+			echo "
+				<tr>
+					<td>$r->judul</td>
+					<td>$r->file_video</td>
+				</tr>
+				
+			
+			";
+		}
+		echo "</table>";
+	}
+
+
+	public function getEcourseByCategory()
+	{
+
+		$this->load->model('ApiModel');
+		$result = $this->ApiModel->getEcourseByCategory()->result();
+		
+		foreach ($result as $r) {
+			echo "
+				<tr>
+					<td>$r->kategori</td>
+				</tr>
+			";
+		}
+	}
+	public function getEcourseByTitle($judul)
+	{
+
+		$this->load->model('ApiModel');
+		$d = $this->ApiModel->getEcourseByTitle($judul)->row();
+		echo $d->judul;
 	}
 }

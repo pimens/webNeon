@@ -47,7 +47,7 @@
 							Documentary
 							</a>
 						</li>
-						<li><a href="">
+						<li><a href="<?php echo base_url();?>index.php?browse/reality">
 							Reality Show
 							</a>
 						</li>

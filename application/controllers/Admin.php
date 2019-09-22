@@ -33,6 +33,13 @@ class Admin extends CI_Controller {
 		$this->load->view('backend/index', $page_data);
 	}
 
+	function halaman()
+	{
+		$page_data['page_name']		=	'halaman';
+		$page_data['page_title']	=	'halaman';
+		$this->load->view($page_data);
+	}
+
 	// CREATE A NEW GENRE
 	function genre_create()
 	{
@@ -201,6 +208,53 @@ class Admin extends CI_Controller {
 		$this->db->delete('materi',  array('id_materi' => $id_materi));
 		redirect(base_url().'index.php?admin/material_list' , 'refresh');
 	}
+
+
+	public function getR($id)
+	{
+
+		$this->load->model('ApiModel');
+		$d = $this->ApiModel->getRating($id)->row();
+		echo $d->rating;
+	}
+	public function insertR()
+	{
+		$judul = $this->input->post("judul");
+		echo $judul;
+	}
+	public function getVid()
+	{
+
+		$this->load->model('ApiModel');
+		$result = $this->ApiModel->getVideo()->result();
+		echo "
+		<table>
+			<tr>
+				<td>judul</td>
+				<td>file</td>
+			</tr>
+		";
+		foreach ($result as $r) {
+			echo "
+				<tr>
+					<td>$r->judul</td>
+					<td>$r->file_video</td>
+				</tr>
+				
+			
+			";
+		}
+		echo "</table>";
+	}
+
+
+
+
+
+
+
+
+
 
 	// LIST OF QUESTION
 	function question_list()

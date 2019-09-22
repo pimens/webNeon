@@ -231,6 +231,15 @@ class Crud_model extends CI_Model
 		return $query->result_array();
 	}
 
+	function get_viewecourse($kategori)
+	{
+		$query 		=	 $this->db->select('*');
+		$query 		=	 $this->db->from('ecourse');
+		$query 		=	 $this->db->where('kategori',$kategori);
+		$query 		=	 $this->db->get();
+		return $query->result();
+	}
+
 	function get_material()
 	{
 		$query 		=	 $this->db->get('materi');
@@ -253,10 +262,45 @@ class Crud_model extends CI_Model
 
 	function create_ecourse()
 	{
-		$data['kategori']			 =	$this->input->post('kategori');
-		$data['deskripsi_kategori']  =	$this->input->post('deskripsi_kategori');
-		$this->db->insert('ecourse', $data);
-		$id_ecourse = $this->db->insert_id();
+		// if (empty($_FILES["file_video"]["name"]) || empty($_FILES["thumbnail"]["name"]) ) {
+		// 	echo "gagal";
+		// } else {
+
+			 // video upload
+			 $conf = array();
+			 $conf['upload_path']          = './assets/global/ecourse_video';
+			 $conf['allowed_types']        = 'gif|jpg|png|mp4|jpeg|flv|wmv';
+			 $conf['max_size']             = '1000000';
+			 $conf['remove_space']         = TRUE;
+			 $conf['file_name']			   = $_FILES["file_video"]["name"];
+			 
+			 $this->load->library('upload', $conf, 'video'); // Create custom object for cover upload
+			//  $this->video->initialize($config);
+			 $this->video->do_upload('file_video');
+			 $file1      = $this->video->data();
+			 $file1      = $file1['file_name'];
+			//thum upload
+			 $con2 = array();
+			 $con2['upload_path']          = './assets/global/ecourse_thumb';
+			 $con2['allowed_types']        = 'gif|jpg|png';
+			 $con2['max_size']             = '1000000';
+			 $con2['remove_space']         = TRUE;
+			 $con2['file_name']			   = $_FILES["thumbnail"]["name"];
+			 $this->load->library('upload', $con2, 'thumb'); // Create custom object for cover upload
+			//  $this->thumb->initialize($con1);
+			 $this->thumb->do_upload('thumbnail');
+			 $file2      = $this->thumb->data();
+			 $file2      = $file2['file_name'];
+			 
+			$data['judul']	   =	$this->input->post('judul');
+			$data['kategori']  =	$this->input->post('kategori');
+			$data['deskripsi_kategori']     =	$this->input->post('deskripsi_kategori');
+			$data['thumbnail']			=	$file2;
+			$data['file_video']			=	$file1;
+
+			$this->db->insert('ecourse', $data);
+			$id_ecourse = $this->db->insert_id();
+		// }
 	}
 
 	function create_material()
@@ -389,7 +433,7 @@ class Crud_model extends CI_Model
 			 // video upload
 			 $conf = array();
 			 $conf['upload_path']          = './assets/global/documentary_video';
-			 $conf['allowed_types']        = 'gif|jpg|png|mp4|jpeg|flv|wmv';
+			 $conf['allowed_types']        = 'gif|mp4|flv|wmv';
 			 $conf['max_size']             = '1000000';
 			 $conf['remove_space']         = TRUE;
 			 $conf['file_name']			   = $_FILES["file_video"]["name"];
@@ -401,7 +445,7 @@ class Crud_model extends CI_Model
 			//thum upload
 			 $con2 = array();
 			 $con2['upload_path']          = './assets/global/documentary_thumb';
-			 $con2['allowed_types']        = 'gif|jpg|png';
+			 $con2['allowed_types']        = 'gif|jpg|png|jpeg';
 			 $con2['max_size']             = '1000000';
 			 $con2['remove_space']         = TRUE;
 			 $con2['file_name']			   = $_FILES["thumbnail"]["name"];

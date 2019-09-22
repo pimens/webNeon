@@ -25,6 +25,10 @@
 			                    <!-- <input type="text" class="form-control" id = "kategori" name="kategori" value="<?php echo $ecourse_detail->kategori;?>"> -->
 			                </div>
 			                <div class="form-group mb-3">
+			                    <label for="name">Title</label>
+			                    <input type="text" class="form-control" name="judul">
+			                </div>
+			                <div class="form-group mb-3">
 			                    <label for="name">Category Description</label>
 			                    <textarea type="text" class="form-control" id = "deskripsi_kategori" name="deskripsi_kategori" value="<?php echo $ecourse_detail->deskripsi_kategori;?>">
 			                    </textarea>
